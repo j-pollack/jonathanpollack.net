@@ -1,42 +1,42 @@
 ---
-import type { MarkdownInstance } from 'astro';
 import Layout from '../layouts/Layout.astro';
+import Window from '../components/Window.astro';
+import { posts } from '../data/writing';
+import { projects } from '../data/site';
 
-const posts = Object.values(import.meta.glob<MarkdownInstance<{
-  title: string;
-  date: string;
-  description: string;
-}>>('./writing/*.md', { eager: true }))
-  .sort((a, b) => b.frontmatter.date.localeCompare(a.frontmatter.date));
+const latest = posts[0];
+const featured = projects[0];
 ---
 
 <Layout>
-  <section class="intro" aria-labelledby="intro-heading">
-    <h1 id="intro-heading">Hello, I’m Jonathan.</h1>
-    <p>A place for occasional writing and links to things I’m working on.</p>
-  </section>
-
-  <section id="writing" aria-labelledby="writing-heading">
-    <h2 id="writing-heading">Writing</h2>
-    <ul class="entries">
-      {posts.map((post) => (
-        <li>
-          <a href={post.url}>{post.frontmatter.title}</a>
-          <time class="muted" datetime={post.frontmatter.date}>{post.frontmatter.date}</time>
-          <p>{post.frontmatter.description}</p>
-        </li>
-      ))}
-    </ul>
-  </section>
-
-  <section id="projects" aria-labelledby="projects-heading">
-    <h2 id="projects-heading">Projects</h2>
-    <p class="muted">Your project links will go here. For now, a placeholder:</p>
-    <ul class="entries">
-      <li>
-        <a href="https://example.com">Example project</a>
-        <p>A sentence about what it does and why you made it.</p>
-      </li>
-    </ul>
-  </section>
+  <div class="home-grid">
+    <Window title="about_me.txt" class="about-window">
+      <span class="hello" aria-hidden="true">☺</span>
+      <h1>Hi there.<br />I’m Jonathan.</h1>
+      <p class="intro">I write about AI and build experiments you can poke at.</p>
+      <p class="intro">Welcome to my little corner of the internet.</p>
+      <div class="current-work">
+        <h2 class="label">Currently exploring</h2>
+        <p>AI control, oversight, and making the ideas easier to explore.</p>
+      </div>
+    </Window>
+    <div class="home-stack">
+      {latest && (
+        <Window title="latest_essay.md" id="writing">
+          <p class="label">From the notebook</p>
+          <h2><a href={latest.url}>{latest.frontmatter.title}</a></h2>
+          <p>{latest.frontmatter.description}</p>
+          <div class="text-links"><a href={latest.url}>Read the essay →</a><a href="/writing/">All writing →</a></div>
+        </Window>
+      )}
+      {featured && (
+        <Window title={`${featured.id.replaceAll('-', '_')}.app`} id="projects" class="blue-bar">
+          <p class="label">{featured.category}</p>
+          <h2><a href={`/projects/#${featured.id}`}>{featured.title}</a></h2>
+          <p>{featured.description}</p>
+          <div class="text-links"><a href="/projects/">Explore projects →</a></div>
+        </Window>
+      )}
+    </div>
+  </div>
 </Layout>

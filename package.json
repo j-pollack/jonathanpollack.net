@@ -9,9 +9,16 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "test": "npm run build && node scripts/check.mjs"
+    "lint": "astro check",
+    "test": "npm run build && node scripts/check.mjs",
+    "check": "npm run lint && npm test",
+    "prepare": "node scripts/install-hooks.mjs"
   },
   "dependencies": {
     "astro": "^7.3.5"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "typescript": "^6.0.3"
   }
 }

@@ -1,0 +1,27 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Window from '../components/Window.astro';
+import { projects, github } from '../data/site';
+import { posts } from '../data/writing';
+---
+
+<Layout title="Projects — Jonathan Pollack" description="Experiments, tools, and ideas made tangible by Jonathan Pollack.">
+  <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span>Projects</span></nav>
+  <div class="page-intro"><p class="label">Things you can try</p><h1>Projects</h1><p class="intro">Little experiments, useful tools, and ideas made tangible.</p></div>
+  <div class="project-grid">
+    {projects.map(project => {
+      const essay = posts.find(post => post.frontmatter.project === project.id);
+      return (
+        <Window title={`${project.id.replaceAll('-', '_')}.app`} id={project.id}>
+          <p class="label">{project.category}</p><h2>{project.title}</h2><p>{project.description}</p>
+          <div class="actions">
+            {project.demo ? <a class="action" href={project.demo}>Launch demo ↗</a> : <span class="planned">Coming soon</span>}
+            {project.source && <a href={project.source}>View source ↗</a>}
+          </div>
+          {essay && <div class="project-context"><p class="label">The idea behind it</p><a href={essay.url}>{essay.frontmatter.title} →</a></div>}
+        </Window>
+      );
+    })}
+  </div>
+  <p class="projects-note">More sketches and experiments live on <a href={github}>GitHub ↗</a>.</p>
+</Layout>

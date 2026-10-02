@@ -1,0 +1,9 @@
+---
+interface Props { title: string; id?: string; class?: string }
+const { title, id, class: className } = Astro.props;
+---
+
+<section id={id} class:list={['window', className]}>
+  <div class="window-bar"><span>{title}</span><span class="window-mark" aria-hidden="true"></span></div>
+  <div class="window-content"><slot /></div>
+</section>
