@@ -24,9 +24,9 @@ h3 { font-size: 1.5rem; }
 p { margin: 0; line-height: 1.65; }
 img, video { max-width: 100%; height: auto; }
 
-.menubar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px 24px; padding: 12px max(24px, calc((100% - 920px) / 2)); border-bottom: 2px solid var(--line); background: var(--paper); font-size: .8rem; }
-.site-name { font-weight: 500; text-decoration: none; }
-.menubar nav { display: flex; flex-wrap: wrap; gap: 4px; }
+.menubar { display: flex; justify-content: space-between; align-items: center; gap: 12px 24px; padding: 12px max(24px, calc((100% - 920px) / 2)); border-bottom: 2px solid var(--line); background: var(--paper); font-size: .8rem; }
+.site-name { font-weight: 500; text-decoration: none; white-space: nowrap; }
+.menubar nav { display: flex; gap: 4px; white-space: nowrap; }
 .menubar nav a { display: inline-flex; align-items: center; padding: 8px 10px; text-decoration: none; }
 .menubar nav a[aria-current] { color: var(--paper); background: var(--ink); }
 main { max-width: 920px; margin: 0 auto; padding: 32px 24px 0; overflow-wrap: anywhere; }
@@ -104,9 +104,9 @@ main { max-width: 920px; margin: 0 auto; padding: 32px 24px 0; overflow-wrap: an
 .post-bottom { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin-top: 28px; padding-top: 18px; border-top: 1px dashed var(--line); font-size: .75rem; }
 
 @media (max-width: 620px) {
-  .menubar { padding: 12px 18px; }
+  .menubar { padding: 12px; gap: 8px; }
   .menubar nav { gap: 0; }
-  .menubar nav a { padding: 8px; }
+  .menubar nav a { padding: 8px 6px; }
   main { padding: 24px 18px 0; }
   .site-footer { padding: 28px 18px; }
   .home-grid { grid-template-columns: minmax(0, 1fr); }
@@ -117,6 +117,10 @@ main { max-width: 920px; margin: 0 auto; padding: 32px 24px 0; overflow-wrap: an
   .year, .archive-note { padding-left: 20px; padding-right: 20px; }
   .project-grid .window:nth-child(even) { margin-top: 0; }
   .companion { padding: 18px; }
+}
+
+@media (max-width: 420px) {
+  .site-name-detail { display: none; }
 }
 
 @media (pointer: coarse) {
