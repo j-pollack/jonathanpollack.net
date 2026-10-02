@@ -1,13 +1,13 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Window from '../components/Window.astro';
-import { projects, github, pages } from '../data/site';
+import { projects, pages } from '../data/site';
 import { posts } from '../data/writing';
 ---
 
 <Layout {...pages['/projects/']}>
   <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span>Projects</span></nav>
-  <div class="page-intro"><p class="label">Things you can try</p><h1>Projects</h1><p class="intro">Little experiments, useful tools, and ideas made tangible.</p></div>
+  <div class="page-intro"><h1>Projects</h1><p class="intro">Little experiments, useful tools, and ideas made tangible.</p></div>
   <div class="project-grid">
     {projects.map(project => {
       const essay = posts.find(post => post.frontmatter.project === project.id);
@@ -23,5 +23,4 @@ import { posts } from '../data/writing';
       );
     })}
   </div>
-  <p class="projects-note">More sketches and experiments live on <a href={github} target="_blank" rel="noopener" aria-label="GitHub (opens in a new tab)">GitHub ↗</a>.</p>
 </Layout>
