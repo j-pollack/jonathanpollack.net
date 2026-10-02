@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/Post.astro
 title: Why I’m doing this
-date: "2026-10-02"
+date: "2026-10-01"
 description: Demos of AI control problems, what they might teach us about auditing frontier labs, and why I want to make a coordinated slowdown technically feasible.
 ---
 
