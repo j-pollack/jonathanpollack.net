@@ -11,7 +11,7 @@ const years = Object.entries(Object.groupBy(posts, post => post.frontmatter.date
 <Layout {...pages['/writing/']}>
   <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span>Writing</span></nav>
   <Window title="writing/" class="archive">
-    <div class="archive-intro"><p class="label">AI control, auditing, and experiments</p><h1>Writing</h1><p class="intro">What it would take to verify an international AI slowdown, and what small experiments can teach us about the difficulties.</p></div>
+    <div class="archive-intro"><h1>Writing</h1><p class="intro">Notes on AI, experiments, and other things on my mind.</p></div>
     {years.map(([year, entries]) => (
       <section aria-labelledby={`year-${year}`}>
         <h2 class="year" id={`year-${year}`}>{year}</h2>
@@ -30,6 +30,5 @@ const years = Object.entries(Object.groupBy(posts, post => post.frontmatter.date
         </ul>
       </section>
     ))}
-    <p class="archive-note">Published when there’s something worth sharing.</p>
   </Window>
 </Layout>

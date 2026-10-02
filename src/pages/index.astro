@@ -11,9 +11,8 @@ const featured = projects[0];
 <Layout>
   <div class="home-grid">
     <Window title="about_me.txt" class="about-window">
-      <span class="hello" aria-hidden="true">☺</span>
-      <h1>Hi there.<br />I’m Jonathan.</h1>
-      <p class="intro">I write about AI and build experiments you can poke at.</p>
+      <h1>Hi there,<br />I’m Jonathan.</h1>
+      <p class="intro">I write about stuff and build experiments you can poke at.</p>
       <p class="intro">Welcome to my little corner of the internet.</p>
       <div class="current-work">
         <h2 class="label">Currently exploring</h2>
@@ -30,7 +29,7 @@ const featured = projects[0];
         </Window>
       )}
       {featured && (
-        <Window title={`${featured.id.replaceAll('-', '_')}.app`} id="projects" class="blue-bar">
+        <Window title={`${featured.id.replaceAll('-', '_')}.app`} id="projects">
           <p class="label">{featured.category}</p>
           <h2><a href={`/projects/#${featured.id}`}>{featured.title}</a></h2>
           <p>{featured.description}</p>
