@@ -4,7 +4,7 @@ A small static Astro site, with Markdown writing and plain CSS.
 
 ## Run locally
 
-Use Node.js 22.12+ (an even-numbered release).
+Use Node.js 24+ (Node 24 LTS recommended, matching Vercel).
 
 ```sh
 npm install
