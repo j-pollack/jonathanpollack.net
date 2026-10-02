@@ -34,8 +34,7 @@ img, video { max-width: 100%; height: auto; }
 .menubar nav a:last-child { padding-right: 0; }
 .menubar nav a[aria-current] { color: var(--paper); background: var(--ink); }
 main { padding-top: 32px; overflow-wrap: anywhere; }
-.site-footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; padding-block: 32px; font-size: .7rem; }
-.site-footer > span:last-child { margin-left: auto; }
+.site-footer { padding-block: 32px; font-size: .7rem; text-align: right; }
 .skip-link { position: absolute; top: -100px; left: 16px; z-index: 1; }
 .skip-link:focus { top: 8px; background: var(--paper); padding: 10px; }
 
@@ -60,7 +59,7 @@ main { padding-top: 32px; overflow-wrap: anywhere; }
 
 .home-grid { display: grid; grid-template-columns: 1fr 1.15fr; gap: 26px; align-items: start; }
 .home-stack { display: grid; gap: 28px; padding-top: 34px; }
-.hello { display: block; font-size: 2rem; line-height: 1; margin-bottom: 18px; }
+.hello { display: block; margin-bottom: 18px; }
 .current-work { border-top: 1px dashed var(--line); margin-top: 28px; padding-top: 22px; }
 .current-work p { margin-top: 12px; font-size: .8rem; }
 
@@ -130,5 +129,5 @@ main { padding-top: 32px; overflow-wrap: anywhere; }
 
 @media (pointer: coarse) {
   .menubar a, .action { min-height: 44px; }
-  .text-links a, .post-bottom a { display: inline-flex; align-items: center; min-height: 44px; }
+  .text-links a, .post-bottom a, .site-footer a { display: inline-flex; align-items: center; min-height: 44px; }
 }

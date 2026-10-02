@@ -1,4 +1,5 @@
 export const github = 'https://github.com/j-pollack';
+export const contactEmail = 'contact@jonathanpollack.net';
 
 export const pages = {
   '/': {

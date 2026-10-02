@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-import { github, pages, shareImagePath } from '../data/site';
+import { github, contactEmail, pages, shareImagePath } from '../data/site';
 
 interface Props {
   title?: string;
@@ -60,10 +60,10 @@ const imageURL = new URL(image, Astro.site);
         <a href="/" aria-current={current === '' ? 'page' : undefined}>Home</a>
         <a href="/writing/" aria-current={current === 'writing' ? 'page' : undefined}>Writing</a>
         <a href="/projects/" aria-current={current === 'projects' ? 'page' : undefined}>Projects</a>
-        <a href={github}>GitHub ↗</a>
+        <a href={github} target="_blank" rel="noopener" aria-label="GitHub (opens in a new tab)">GitHub ↗</a>
       </nav>
     </header>
     <main id="main"><slot /></main>
-    <footer class="site-footer"><span>All ideas welcome.</span><span>Jonathan Pollack / <a href={github}>GitHub ↗</a></span></footer>
+    <footer class="site-footer">© {new Date().getUTCFullYear()} Jonathan Pollack / <a href={`mailto:${contactEmail}`}>Email me</a> / <a href={github} target="_blank" rel="noopener" aria-label="GitHub (opens in a new tab)">GitHub ↗</a></footer>
   </body>
 </html>
