@@ -1,9 +1,8 @@
 ---
 layout: ../../layouts/Post.astro
-title: Why I’m building this
+title: Why I’m doing this
 date: "2026-10-02"
 description: Demos of AI control problems, what they might teach us about auditing frontier labs, and why I want to make a coordinated slowdown technically feasible.
-project: plant-the-flag
 ---
 
 My current professional focus is helping get the world to a place where an internationally coordinated AI slowdown or pause is technically feasible. I want us to have a credible way to check that agreed limits are being followed, including when someone has an incentive to evade them.
@@ -22,24 +21,16 @@ The analogy has limits. A lab is an organization made up of people, with physica
 
 That overlap is something I want to investigate. A small experiment gives us a way to isolate one difficulty, change the setup, and see whether a proposed control actually helps.
 
-## The first experiment: plant the flag
-
-The first demo I’m planning is **Plant the flag**. The challenge is to prompt an agent so that it evades an AI monitor and makes a disallowed network call.
-
-The network call stands in for a consequential action, such as starting a training run that violates an agreed pause. In the demo, it would be a harmless request to a test endpoint. The interesting question is whether the monitor can recognize and stop the attempt while still allowing the agent to do legitimate work.
-
-As a participant, you would write the agent’s instructions and try to get it past the monitor. I want the demo to make the resulting interaction inspectable: what the agent attempted, what the monitor could see, and where the attempt was caught or slipped through.
-
-From there, we can ask more specific questions. Does giving the monitor more context help? Does an apparent improvement hold up once the attacker knows about it? How often does a stricter monitor block ordinary work? How much effort does it take to find an evasion compared with fixing one?
-
 ## What I hope comes out of this
 
 I have two ambitions for these experiments.
 
-First, I hope they make the problems concrete enough that more people choose to act. Trying to get an agent past a monitor can give someone a much more specific sense of the difficulty than reading a broad claim about oversight. That might lead them to contribute an experiment, work on auditing tools, or press for regulation and the technical capacity to enforce it.
+First, I hope they make the problems concrete enough that more people choose to act. Working through an oversight problem yourself can give you a much more specific sense of the difficulty than reading a broad claim about it. That might lead someone to contribute an experiment, work on auditing tools, or press for regulation and the technical capacity to enforce it.
 
 Second, I hope they can generate useful scientific insight. We may find control techniques that hold up under pressure, failure modes we hadn’t anticipated, or gaps between offensive and defensive capabilities that deserve more attention. Even a failed idea can be useful if the experiment makes clear why it failed.
 
-A successful evasion in a toy environment tells us something about that setup. Connecting it to a real lab audit takes further work. Likewise, a monitor that catches every attempt we tried has only been tested against those attempts. I want the writeups here to be explicit about those limits, so readers can judge what each result supports.
+A toy experiment leaves out much of what makes real oversight difficult. I want the writeups here to be explicit about those limits, so readers can judge what each result supports and what would need to be tested next.
 
-The starting point is modest: build the first demo, let people try to break it, and write down what we learn. The larger ambition is to help make international limits on AI development something we could actually verify and enforce.
+The approach is to build demos, let people try to break them, and write down what we learn. The larger ambition is to help make international limits on AI development something we could actually verify and enforce.
+
+The first experiment is [Plant the flag](/writing/plant-the-flag/), a challenge to get an agent past an AI monitor. Its companion essay explains the setup and the questions I want to explore with it.
