@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { github } from '../data/site';
 
 interface Props {
   title?: string;
@@ -10,6 +11,7 @@ const {
   title = 'Jonathan Pollack',
   description = 'Occasional writing and a few projects by Jonathan Pollack.',
 } = Astro.props;
+const current = Astro.url.pathname.split('/')[1];
 ---
 
 <!doctype html>
@@ -19,17 +21,23 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <title>{title}</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet" />
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
-    <header>
-      <a class="site-name" href="/">Jonathan Pollack</a>
+    <header class="menubar">
+      <a class="site-name" href="/">JP’s computer</a>
       <nav aria-label="Main navigation">
-        <a href="/#writing">Writing</a>
-        <a href="/#projects">Projects</a>
+        <a href="/" aria-current={current === '' ? 'page' : undefined}>Home</a>
+        <a href="/writing/" aria-current={current === 'writing' ? 'page' : undefined}>Writing</a>
+        <a href="/projects/" aria-current={current === 'projects' ? 'page' : undefined}>Projects</a>
+        <a href={github}>GitHub ↗</a>
       </nav>
     </header>
     <main id="main"><slot /></main>
-    <footer>A small corner of the internet.</footer>
+    <footer class="site-footer"><span>All ideas welcome.</span><span>Jonathan Pollack / <a href={github}>GitHub ↗</a></span></footer>
   </body>
 </html>

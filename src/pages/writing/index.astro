@@ -1,0 +1,35 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Window from '../../components/Window.astro';
+import { posts, shortDate } from '../../data/writing';
+import { projects } from '../../data/site';
+
+const years = Object.entries(Object.groupBy(posts, post => post.frontmatter.date.slice(0, 4)))
+  .sort(([a], [b]) => b.localeCompare(a));
+---
+
+<Layout title="Writing — Jonathan Pollack" description="Occasional notes and essays by Jonathan Pollack, with experiments you can try.">
+  <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span>Writing</span></nav>
+  <Window title="writing/" class="archive">
+    <div class="archive-intro"><p class="label">Notes, essays, and working things out</p><h1>Writing</h1><p class="intro">An occasional thought, written down. Some come with something you can try.</p></div>
+    {years.map(([year, entries]) => (
+      <section aria-labelledby={`year-${year}`}>
+        <h2 class="year" id={`year-${year}`}>{year}</h2>
+        <ul class="entries">
+          {entries!.map(post => {
+            const project = projects.find(project => project.id === post.frontmatter.project);
+            return (
+              <li class="entry">
+                <time datetime={post.frontmatter.date}>{shortDate.format(new Date(post.frontmatter.date))}</time>
+                <div><h3><a href={post.url}>{post.frontmatter.title} →</a></h3><p>{post.frontmatter.description}</p>
+                  {project && <p class="attached"><a href={`/projects/#${project.id}`}>↳ Companion experiment: {project.title} ↗</a></p>}
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+    ))}
+    <p class="archive-note">Published when there’s something worth sharing.</p>
+  </Window>
+</Layout>

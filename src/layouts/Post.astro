@@ -1,14 +1,35 @@
 ---
 import Layout from './Layout.astro';
+import Window from '../components/Window.astro';
+import { projects } from '../data/site';
+import { longDate, type PostFrontmatter } from '../data/writing';
 
+interface Props { frontmatter: PostFrontmatter }
 const { frontmatter } = Astro.props;
+const project = projects.find(project => project.id === frontmatter.project);
+const filename = Astro.url.pathname.split('/').filter(Boolean).at(-1)!.replaceAll('-', '_');
 ---
 
 <Layout title={`${frontmatter.title} — Jonathan Pollack`} description={frontmatter.description}>
-  <article>
-    <p class="muted"><time datetime={frontmatter.date}>{frontmatter.date}</time></p>
-    <h1>{frontmatter.title}</h1>
-    <slot />
-  </article>
-  <p class="back-link"><a href="/#writing">← Back to writing</a></p>
+  <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/writing/">Writing</a></nav>
+  <Window title={`${filename}.md`} class="post-window">
+    <article>
+      <div class="post-meta"><span>Essay</span><time datetime={frontmatter.date}>{longDate.format(new Date(frontmatter.date))}</time></div>
+      <h1>{frontmatter.title}</h1>
+      <p class="dek">{frontmatter.description}</p>
+      <div class="prose"><slot /></div>
+      {project && (
+        <aside class="companion" aria-labelledby="companion-heading">
+          <p class="label">Companion experiment / {project.id.replaceAll('-', '_')}.app</p>
+          <h2 id="companion-heading">Read it. Then poke at it.</h2>
+          <p>{project.description}</p>
+          <div class="actions">
+            {project.demo && <a class="action" href={project.demo}>Try the demo ↗</a>}
+            <a class:list={['action', { secondary: project.demo }]} href={`/projects/#${project.id}`}>See project notes →</a>
+          </div>
+        </aside>
+      )}
+    </article>
+    <div class="post-bottom"><a href="/writing/">← All writing</a>{project?.source && <a href={project.source}>Source on GitHub ↗</a>}</div>
+  </Window>
 </Layout>
