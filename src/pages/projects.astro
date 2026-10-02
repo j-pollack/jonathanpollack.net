@@ -1,11 +1,11 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Window from '../components/Window.astro';
-import { projects, github } from '../data/site';
+import { projects, github, pages } from '../data/site';
 import { posts } from '../data/writing';
 ---
 
-<Layout title="Projects — Jonathan Pollack" description="Experiments, tools, and ideas made tangible by Jonathan Pollack.">
+<Layout {...pages['/projects/']}>
   <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span>Projects</span></nav>
   <div class="page-intro"><p class="label">Things you can try</p><h1>Projects</h1><p class="intro">Little experiments, useful tools, and ideas made tangible.</p></div>
   <div class="project-grid">

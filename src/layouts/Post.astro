@@ -10,7 +10,8 @@ const project = projects.find(project => project.id === frontmatter.project);
 const filename = Astro.url.pathname.split('/').filter(Boolean).at(-1)!.replaceAll('-', '_');
 ---
 
-<Layout title={`${frontmatter.title} — Jonathan Pollack`} description={frontmatter.description}>
+<Layout title={`${frontmatter.title} — Jonathan Pollack`} description={frontmatter.description}
+  image={frontmatter.image} imageAlt={frontmatter.imageAlt} publishedTime={frontmatter.date}>
   <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/writing/">Writing</a></nav>
   <Window title={`${filename}.md`} class="post-window">
     <article>
