@@ -22,13 +22,13 @@ Edits appear automatically while the development server is running.
   and `source` URLs to a project when they are ready; without a demo URL,
   it displays “Coming soon.”
 - Edit `src/styles/global.css` for the appearance.
-- Add `.md` files under `src/pages/writing/`, following the sample’s frontmatter.
+- Add `.md` files under `src/pages/writing/`, following the existing essay’s frontmatter.
   They become pages and appear in `/writing/` automatically, newest first.
   The homepage features the latest essay. ISO dates use `YYYY-MM-DD`.
-- Add `project: control-room` to a post’s frontmatter to connect it to that
+- Add `project: plant-the-flag` to a post’s frontmatter to connect it to that
   project. The archive, essay, and project page link to each other automatically.
-- Both sample essays and the planned project are placeholders; replace or
-  delete them before publishing. Tests discover posts automatically.
+- Plant the flag is a planned experiment; add its demo URL when it is ready.
+  Tests discover posts automatically.
 - Colors follow the reader’s light/dark preference. Fonts load from Google
   Fonts, with local fallbacks when unavailable.
 
