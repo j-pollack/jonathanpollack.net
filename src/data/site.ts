@@ -28,8 +28,8 @@ export const projects: {
   {
     id: 'plant-the-flag',
     title: 'Plant the flag',
-    description: 'Prompt an agent to evade an AI monitor and make a disallowed network call to a harmless test endpoint. A planned experiment in AI control, with parallels to auditing frontier labs.',
-    category: 'AI control / planned experiment',
-    // Add demo and source URLs when the experiment is live.
+    description: 'Prompt an agent to evade an AI monitor and make a disallowed network call to a harmless test endpoint. An experiment in AI control, with parallels to auditing frontier labs.',
+    category: 'AI control / experiment',
+    demo: 'https://ptf.jonathanpollack.net',
   },
 ];

@@ -27,7 +27,7 @@ Edits appear automatically while the development server is running.
   The homepage features the latest essay. ISO dates use `YYYY-MM-DD`.
 - Add `project: plant-the-flag` to a post’s frontmatter to connect it to that
   project. The archive, essay, and project page link to each other automatically.
-- Plant the flag is a planned experiment; add its demo URL when it is ready.
+- Plant the flag is linked at `https://ptf.jonathanpollack.net`.
   Tests discover posts automatically.
 - Colors follow the reader’s light/dark preference. Fonts load from Google
   Fonts, with local fallbacks when unavailable.
