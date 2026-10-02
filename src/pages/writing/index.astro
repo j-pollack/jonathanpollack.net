@@ -8,10 +8,10 @@ const years = Object.entries(Object.groupBy(posts, post => post.frontmatter.date
   .sort(([a], [b]) => b.localeCompare(a));
 ---
 
-<Layout title="Writing — Jonathan Pollack" description="Occasional notes and essays by Jonathan Pollack, with experiments you can try.">
+<Layout title="Writing — Jonathan Pollack" description="Essays by Jonathan Pollack on AI control, auditing frontier labs, and making an international AI slowdown technically feasible.">
   <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span>Writing</span></nav>
   <Window title="writing/" class="archive">
-    <div class="archive-intro"><p class="label">Notes, essays, and working things out</p><h1>Writing</h1><p class="intro">An occasional thought, written down. Some come with something you can try.</p></div>
+    <div class="archive-intro"><p class="label">AI control, auditing, and experiments</p><h1>Writing</h1><p class="intro">What it would take to verify an international AI slowdown, and what small experiments can teach us about the difficulties.</p></div>
     {years.map(([year, entries]) => (
       <section aria-labelledby={`year-${year}`}>
         <h2 class="year" id={`year-${year}`}>{year}</h2>
