@@ -5,6 +5,8 @@ export interface PostFrontmatter {
   date: string;
   description: string;
   project?: string;
+  image?: string;
+  imageAlt?: string;
 }
 
 export const posts = Object.values(import.meta.glob<MarkdownInstance<PostFrontmatter>>(

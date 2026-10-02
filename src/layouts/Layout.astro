@@ -1,17 +1,25 @@
 ---
 import '../styles/global.css';
-import { github } from '../data/site';
+import { github, pages, shareImagePath } from '../data/site';
 
 interface Props {
   title?: string;
   description?: string;
+  image?: string;
+  imageAlt?: string;
+  publishedTime?: string;
 }
 
 const {
-  title = 'Jonathan Pollack',
-  description = 'Occasional writing and a few projects by Jonathan Pollack.',
+  title = pages['/'].title,
+  description = pages['/'].description,
+  image = shareImagePath(Astro.url.pathname),
+  imageAlt = `${title} — ${description}`,
+  publishedTime,
 } = Astro.props;
 const current = Astro.url.pathname.split('/')[1];
+const canonical = new URL(`${Astro.url.pathname.replace(/\/$/, '')}/`, Astro.site);
+const imageURL = new URL(image, Astro.site);
 ---
 
 <!doctype html>
@@ -21,6 +29,24 @@ const current = Astro.url.pathname.split('/')[1];
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <title>{title}</title>
+    <link rel="canonical" href={canonical} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="Jonathan Pollack" />
+    <meta property="og:type" content={publishedTime ? 'article' : 'website'} />
+    <meta property="og:image" content={imageURL} />
+    <meta property="og:image:alt" content={imageAlt} />
+    {image === shareImagePath(Astro.url.pathname) && <meta property="og:image:width" content="1200" />}
+    {image === shareImagePath(Astro.url.pathname) && <meta property="og:image:height" content="630" />}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageURL} />
+    <meta name="twitter:image:alt" content={imageAlt} />
+    {publishedTime && <meta property="article:published_time" content={publishedTime} />}
+    {publishedTime && <meta property="article:author" content={new URL('/', Astro.site)} />}
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

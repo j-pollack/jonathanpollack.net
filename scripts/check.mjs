@@ -1,7 +1,9 @@
 import assert from 'node:assert/strict';
 import { readFile, readdir } from 'node:fs/promises';
 import { extname, join } from 'node:path';
-import { projects } from '../src/data/site.ts';
+import { projects, shareImagePath } from '../src/data/site.ts';
+import sharp from 'sharp';
+import { createHash } from 'node:crypto';
 
 const home = await readFile('dist/index.html', 'utf8');
 const writing = await readFile('dist/writing/index.html', 'utf8');
@@ -30,8 +32,47 @@ for (const project of projects) {
 }
 
 const htmlFiles = (await readdir('dist', { recursive: true })).filter(file => file.endsWith('.html'));
+const sitemap = await readFile('dist/sitemap-0.xml', 'utf8');
+const sitemapURLs = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(([, url]) => url);
+assert.equal(sitemapURLs.length, htmlFiles.length, 'Sitemap lists every page once');
+assert.equal(new Set(sitemapURLs).size, htmlFiles.length, 'Sitemap has no duplicate URLs');
+assert.match(await readFile('dist/robots.txt', 'utf8'), /Sitemap: https:\/\/www\.jonathanpollack\.net\/sitemap-index\.xml/);
+const generatedCardHashes = new Set();
 for (const file of htmlFiles) {
   const html = await readFile(join('dist', file), 'utf8');
+  const meta = name => html.match(new RegExp(`<meta (?:name|property)="${name}" content="([^"]*)"`))?.[1];
+  const title = html.match(/<title>([^<]+)<\/title>/)?.[1];
+  const description = meta('description');
+  const canonical = new URL(file.replace(/index\.html$/, ''), 'https://www.jonathanpollack.net/').href;
+  assert(title && description, `${file}: title and description are present`);
+  assert(html.includes(`<link rel="canonical" href="${canonical}"`), `${file}: canonical uses the production URL`);
+  assert(sitemapURLs.includes(canonical), `${file}: canonical is in the sitemap`);
+  assert.equal(meta('og:url'), canonical);
+  assert.equal(meta('og:title'), title);
+  assert.equal(meta('og:description'), description);
+  assert.equal(meta('twitter:card'), 'summary_large_image');
+  assert.equal(meta('twitter:title'), title);
+  assert.equal(meta('twitter:description'), description);
+  assert.equal(meta('twitter:image'), meta('og:image'));
+  assert(meta('og:image:alt') && meta('twitter:image:alt'), `${file}: image descriptions are present`);
+  const image = new URL(meta('og:image'));
+  assert.equal(image.protocol, 'https:', `${file}: sharing image uses HTTPS`);
+  if (image.origin === 'https://www.jonathanpollack.net') {
+    assert((await readFile(join('dist', decodeURI(image.pathname)))).length > 0, `${file}: sharing image exists`);
+    if (image.pathname === shareImagePath(new URL(canonical).pathname)) {
+      const metadata = await sharp(join('dist', decodeURI(image.pathname))).metadata();
+      assert.equal(metadata.format, 'png');
+      assert.equal(metadata.width, 1200);
+      assert.equal(metadata.height, 630);
+      const hash = createHash('sha256').update(await readFile(join('dist', decodeURI(image.pathname)))).digest('hex');
+      assert(!generatedCardHashes.has(hash), `${file}: generated card should contain page-specific content`);
+      generatedCardHashes.add(hash);
+    }
+  }
+  if (file.startsWith('writing/') && file !== 'writing/index.html') {
+    assert.equal(meta('og:type'), 'article');
+    assert(meta('article:published_time'), `${file}: article publication date is present`);
+  } else assert.equal(meta('og:type'), 'website');
   assert.doesNotMatch(html, /<script\b/);
   assert.match(html, /<html lang="en">/);
   assert.match(html, /name="viewport"/);
@@ -46,4 +87,4 @@ for (const file of htmlFiles) {
     if (url.hash) assert(target.includes(`id="${decodeURIComponent(url.hash.slice(1))}"`), `${file}: missing anchor ${href}`);
   }
 }
-console.log(`${htmlFiles.length} static pages checked: navigation, internal links, archive order, and projects.`);
+console.log(`${htmlFiles.length} static pages checked: navigation, internal links, archive order, projects, SEO, and sharing images.`);

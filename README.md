@@ -22,15 +22,38 @@ Edits appear automatically while the development server is running.
   and `source` URLs to a project when they are ready; without a demo URL,
   it displays “Coming soon.”
 - Edit `src/styles/global.css` for the appearance.
-- Add `.md` files under `src/pages/writing/`, following the sample’s frontmatter.
+- Add `.md` files under `src/pages/writing/`, following the existing essay’s frontmatter.
   They become pages and appear in `/writing/` automatically, newest first.
   The homepage features the latest essay. ISO dates use `YYYY-MM-DD`.
-- Add `project: control-room` to a post’s frontmatter to connect it to that
+- Add `project: plant-the-flag` to a post’s frontmatter to connect it to that
   project. The archive, essay, and project page link to each other automatically.
-- Both sample essays and the planned project are placeholders; replace or
-  delete them before publishing. Tests discover posts automatically.
+- Plant the flag is a planned experiment; add its demo URL when it is ready.
+  Tests discover posts automatically.
 - Colors follow the reader’s light/dark preference. Fonts load from Google
   Fonts, with local fallbacks when unavailable.
+
+## SEO and sharing
+
+The production URL is configured in `astro.config.mjs`. Every page has a
+canonical URL, description, Open Graph tags, and a large Twitter sharing card.
+The sitemap is generated at build time and listed in `public/robots.txt`.
+
+Each page gets a 1200×630 PNG built from its title and description, with the
+JP monogram from `public/favicon.svg`. Static page metadata lives in
+`src/data/site.ts`; essay cards use Markdown frontmatter. Adding or editing an
+essay updates its card on the next build. The bundled Space Grotesk font is
+from Google Fonts, under the included SIL Open Font License.
+
+To give an essay a custom preview instead, put a PNG or JPEG in
+`public/` and add these optional frontmatter fields:
+
+```yaml
+image: /my-essay-card.png
+imageAlt: A short description of the preview image.
+```
+
+Other Astro pages can pass `image` and `imageAlt` directly to `Layout`.
+The manually designed `public/sharing-card.png` remains available as an override.
 
 ## Check and build
 

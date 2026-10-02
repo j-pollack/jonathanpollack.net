@@ -1,1 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect x="2" y="2" width="28" height="28" fill="#faf2da" stroke="#26313b" stroke-width="2"/><path fill="#f2bba9" stroke="#26313b" stroke-width="2" d="M2 2h28v7H2z"/><text x="16" y="24" text-anchor="middle" font-family="monospace" font-size="13" fill="#26313b">JP</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="12" fill="#faf2da"/>
+  <path d="M12 14C22 8 27 12 25 24L22 43C20 56 7 55 8 45C9 37 34 28 44 21C54 14 48 7 42 10C35 14 35 26 34 36L33 51"
+    fill="none" stroke="#26313b" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
