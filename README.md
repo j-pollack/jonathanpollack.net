@@ -52,3 +52,9 @@ Node 24 and the committed lockfile.
 Vercel can deploy this repository using its Astro preset; no adapter is needed
 for static output. `vercel.json` sets `npm run check` as its build command,
 so failed diagnostics, builds, or tests stop the deployment.
+
+The connected Vercel project also requires the GitHub check named
+`Lint, build, and test` before assigning a production deployment from `main`
+to its live domains. This production-only Deployment Check is configured in
+Vercel's project settings. Keep the job name stable, or update that setting
+when renaming it. Preview deployments are not blocked by this check.

@@ -9,6 +9,7 @@ permissions:
 
 jobs:
   check:
+    # Required by Vercel's production Deployment Check; keep this name stable.
     name: Lint, build, and test
     runs-on: ubuntu-latest
     timeout-minutes: 10
