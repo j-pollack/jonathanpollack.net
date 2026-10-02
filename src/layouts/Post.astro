@@ -1,0 +1,14 @@
+---
+import Layout from './Layout.astro';
+
+const { frontmatter } = Astro.props;
+---
+
+<Layout title={`${frontmatter.title} — Jonathan Pollack`} description={frontmatter.description}>
+  <article>
+    <p class="muted"><time datetime={frontmatter.date}>{frontmatter.date}</time></p>
+    <h1>{frontmatter.title}</h1>
+    <slot />
+  </article>
+  <p class="back-link"><a href="/#writing">← Back to writing</a></p>
+</Layout>

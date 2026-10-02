@@ -1,0 +1,42 @@
+---
+import type { MarkdownInstance } from 'astro';
+import Layout from '../layouts/Layout.astro';
+
+const posts = Object.values(import.meta.glob<MarkdownInstance<{
+  title: string;
+  date: string;
+  description: string;
+}>>('./writing/*.md', { eager: true }))
+  .sort((a, b) => b.frontmatter.date.localeCompare(a.frontmatter.date));
+---
+
+<Layout>
+  <section class="intro" aria-labelledby="intro-heading">
+    <h1 id="intro-heading">Hello, I’m Jonathan.</h1>
+    <p>A place for occasional writing and links to things I’m working on.</p>
+  </section>
+
+  <section id="writing" aria-labelledby="writing-heading">
+    <h2 id="writing-heading">Writing</h2>
+    <ul class="entries">
+      {posts.map((post) => (
+        <li>
+          <a href={post.url}>{post.frontmatter.title}</a>
+          <time class="muted" datetime={post.frontmatter.date}>{post.frontmatter.date}</time>
+          <p>{post.frontmatter.description}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section id="projects" aria-labelledby="projects-heading">
+    <h2 id="projects-heading">Projects</h2>
+    <p class="muted">Your project links will go here. For now, a placeholder:</p>
+    <ul class="entries">
+      <li>
+        <a href="https://example.com">Example project</a>
+        <p>A sentence about what it does and why you made it.</p>
+      </li>
+    </ul>
+  </section>
+</Layout>

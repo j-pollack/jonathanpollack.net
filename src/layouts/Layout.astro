@@ -1,0 +1,35 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Jonathan Pollack',
+  description = 'Occasional writing and a few projects by Jonathan Pollack.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header>
+      <a class="site-name" href="/">Jonathan Pollack</a>
+      <nav aria-label="Main navigation">
+        <a href="/#writing">Writing</a>
+        <a href="/#projects">Projects</a>
+      </nav>
+    </header>
+    <main id="main"><slot /></main>
+    <footer>A small corner of the internet.</footer>
+  </body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "name": "jonathanpollack-net",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "test": "npm run build && node scripts/check.mjs"
+  },
+  "dependencies": {
+    "astro": "^7.3.5"
+  }
+}
