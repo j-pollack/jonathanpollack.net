@@ -18,7 +18,7 @@ import { posts } from '../data/writing';
             {project.demo ? <a class="action" href={project.demo}>Launch demo ↗</a> : <span class="planned">Coming soon</span>}
             {project.source && <a href={project.source}>View source ↗</a>}
           </div>
-          {essay && <div class="project-context"><p class="label">The idea behind it</p><a href={essay.url}>{essay.frontmatter.title} →</a></div>}
+          {essay && <div class="project-context"><p class="label">The idea behind it</p><a href={essay.url}>{essay.frontmatter.title}&nbsp;→</a></div>}
         </Window>
       );
     })}
