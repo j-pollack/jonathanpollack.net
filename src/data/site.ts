@@ -27,10 +27,10 @@ export const projects: {
   source?: string;
 }[] = [
   {
-    id: 'plant-the-flag',
-    title: 'Plant the flag',
-    description: 'Prompt an agent to evade an AI monitor and make a disallowed network call to a harmless test endpoint. An experiment in AI control, with parallels to auditing frontier labs.',
+    id: 'capture-the-flag',
+    title: 'Capture the flag',
+    description: 'Prompt an agent to evade an AI monitor and steal the contents of flag.txt.',
     category: 'AI control / experiment',
-    demo: 'https://ptf.jonathanpollack.net',
+    demo: 'https://ctf.jonathanpollack.net',
   },
 ];
