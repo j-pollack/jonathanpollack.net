@@ -2,12 +2,19 @@
 import Layout from './Layout.astro';
 import Window from '../components/Window.astro';
 import { projects } from '../data/site';
-import { longDate, type PostFrontmatter } from '../data/writing';
+// Type-only: a runtime import of data/writing cycles back through every post that uses this layout.
+import type { PostFrontmatter } from '../data/writing';
+
+const longDate = new Intl.DateTimeFormat('en-US', {
+  month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC',
+});
 
 interface Props { frontmatter: PostFrontmatter }
 const { frontmatter } = Astro.props;
 const project = projects.find(project => project.id === frontmatter.project);
 const filename = Astro.url.pathname.split('/').filter(Boolean).at(-1)!.replaceAll('-', '_');
+// External essay links open in a new tab.
+const body = (await Astro.slots.render('default')).replaceAll(/<a href="(?=https?:)/g, '<a target="_blank" rel="noopener" href="');
 ---
 
 <Layout title={`${frontmatter.title} — Jonathan Pollack`} description={frontmatter.description}
@@ -18,7 +25,7 @@ const filename = Astro.url.pathname.split('/').filter(Boolean).at(-1)!.replaceAl
       <div class="post-meta"><span>Essay</span><time datetime={frontmatter.date}>{longDate.format(new Date(frontmatter.date))}</time></div>
       <h1>{frontmatter.title}</h1>
       <p class="dek">{frontmatter.description}</p>
-      <div class="prose"><slot /></div>
+      <div class="prose" set:html={body} />
       {project && (
         <aside class="companion" aria-labelledby="companion-heading">
           <p class="label">Companion experiment / {project.id.replaceAll('-', '_')}.app</p>
