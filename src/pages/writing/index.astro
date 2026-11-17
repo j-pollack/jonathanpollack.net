@@ -21,7 +21,7 @@ const years = Object.entries(Object.groupBy(posts, post => post.frontmatter.date
             return (
               <li class="entry">
                 <time datetime={post.frontmatter.date}>{shortDate.format(new Date(post.frontmatter.date))}</time>
-                <div><h3><a href={post.url}>{post.frontmatter.title} →</a></h3><p>{post.frontmatter.description}</p>
+                <div><h3><a href={post.url}>{post.frontmatter.title}&nbsp;→</a></h3><p>{post.frontmatter.description}</p>
                   {project && <p class="attached"><a href={`/projects/#${project.id}`}>↳ Companion experiment: {project.title} ↗</a></p>}
                 </div>
               </li>
