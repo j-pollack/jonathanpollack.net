@@ -111,13 +111,13 @@ On the labeled datasets, out of every 1,000 harmless texts, here is how many eac
 
 | Type named | Sonnet | Jev | Difference |
 |---|---|---|---|
-| Guardrail evasion | 45 | 80 | +35 |
-| Injection through content | 18 | 47 | +29 |
-| Instruction override | 42 | 45 | +3 |
-| Prompt extraction | 13 | 0 | −13 |
-| All types | 118 | 172 | +54 |
+| Guardrail evasion | 45.2 | 79.6 | +34.4 |
+| Injection through content | 17.6 | 46.7 | +29.0 |
+| Instruction override | 41.5 | 45.3 | +3.9 |
+| Prompt extraction | 13.3 | 0.0 | −13.3 |
+| All types | 117.6 | 171.5 | +54.0 |
 
-Two types account for the bulk of Jev's extra false positives. Jev calls stories, role-play and requests with a scene-setting first line guardrail evasion. It calls ordinary emails injection through content. Conversely, Jev never called a harmless text prompt extraction, whereas Sonnet did 13 times per 1,000.
+Two types account for the bulk of Jev's extra false positives. Jev calls stories, role-play and requests with a scene-setting first line guardrail evasion. It calls ordinary emails injection through content. Conversely, Jev never called a harmless text prompt extraction, whereas Sonnet did 13.3 times per 1,000.
 
 ## Which type of attack each judge named
 
@@ -166,7 +166,7 @@ Jev's gap comes from false positives rather than missed attacks. It misses attac
 
 A second auditor, so the reference labels have a measured agreement rate. A revised definition that settles the four disputed readings. Other guards run against the same 500 audited texts, since the audit can now score any judge.
 
-*Code and audit data: links to follow.*
+*Code, results and a script that checks every number in this post: [github.com/j-pollack/technique-guard/tree/main/v2](https://github.com/j-pollack/technique-guard/tree/main/v2).*
 
 ## Appendix A: The definition
 
