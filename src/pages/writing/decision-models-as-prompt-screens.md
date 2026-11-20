@@ -166,7 +166,7 @@ Jev's gap comes from false positives rather than missed attacks. It misses attac
 
 A second auditor, so the reference labels have a measured agreement rate. A revised definition that settles the four disputed readings. Other guards run against the same 500 audited texts, since the audit can now score any judge.
 
-*Code, results and a script that checks every number in this post: [github.com/j-pollack/technique-guard/tree/main/v2](https://github.com/j-pollack/technique-guard/tree/main/v2).*
+*Code, results and a script that checks every number in this post: [github.com/j-pollack/technique-guard](https://github.com/j-pollack/technique-guard).*
 
 ## Appendix A: The definition
 
