@@ -8,7 +8,7 @@ Hi!
 
 I wanted to create a place where I could make public some of my work, thoughts, experiments, etc.
 
-A current fascination of mine is AI safety and control. It seems to me that frontier AI labs are moving really, really fast, and at this pace it's only a matter of time until something big breaks. Are we all going to die? Probably not! But we might experience very avoidable catastrophes, and that seems pretty unacceptable†. 
+A current fascination of mine is AI safety and control. It seems to me that frontier AI labs are moving really, really fast, and at this pace it's only a matter of time until something big breaks. Are we all going to die? Probably not! But we might experience very avoidable catastrophes, and that seems pretty unacceptable[^1]. 
 
 ## What to do about it?
 
@@ -20,4 +20,4 @@ In the meanwhile, I hope to make this space a place where I post cool stuff alon
 
 ---
 
-†Indeed we've begun to see many, many "smaller" incidents: [The HuggingFace Incident](https://metr.org/blog/2026-08-26-openai-hugging-face-incident-investigation/), [The OAI Swarm (aka HFv2)](https://collusion.wiki/), [The Ruby Gems attack](https://rubyhack.ai/), etc. But it's not a stretch to imagine there are more that have not been disclosed or discovered.
+[^1]: Indeed we've begun to see many, many "smaller" incidents: [The HuggingFace Incident](https://metr.org/blog/2026-08-26-openai-hugging-face-incident-investigation/), [The OAI Swarm (aka HFv2)](https://collusion.wiki/), [The Ruby Gems attack](https://rubyhack.ai/), etc. But it's not a stretch to imagine there are more that have not yet been disclosed or discovered.

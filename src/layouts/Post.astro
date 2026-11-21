@@ -15,6 +15,10 @@ const project = projects.find(project => project.id === frontmatter.project);
 const filename = Astro.url.pathname.split('/').filter(Boolean).at(-1)!.replaceAll('-', '_');
 // External essay links open in a new tab.
 const body = (await Astro.slots.render('default')).replaceAll(/<a href="(?=https?:)/g, '<a target="_blank" rel="noopener" href="');
+const wordsPerMinute = 225;
+const text = body.replace(/<[^>]+>/g, ' ').replace(/&(?:#\w+|\w+);/g, ' ');
+const wordCount = text.match(/\S+/g)?.length ?? 0;
+const minutes = Math.max(1, Math.ceil(wordCount / wordsPerMinute));
 ---
 
 <Layout title={`${frontmatter.title} — Jonathan Pollack`} description={frontmatter.description}
@@ -22,7 +26,7 @@ const body = (await Astro.slots.render('default')).replaceAll(/<a href="(?=https
   <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/writing/">Writing</a></nav>
   <Window title={`${filename}.md`} class="post-window">
     <article>
-      <div class="post-meta"><span>Essay</span><time datetime={frontmatter.date}>{longDate.format(new Date(frontmatter.date))}</time></div>
+      <div class="post-meta"><span>Essay</span><time datetime={frontmatter.date}>{longDate.format(new Date(frontmatter.date))}</time><span>{minutes} min read</span></div>
       <h1>{frontmatter.title}</h1>
       <p class="dek">{frontmatter.description}</p>
       <div class="prose" set:html={body} />

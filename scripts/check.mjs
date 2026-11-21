@@ -70,6 +70,7 @@ for (const file of htmlFiles) {
     }
   }
   if (file.startsWith('writing/') && file !== 'writing/index.html') {
+    assert.match(html, /[1-9]\d* min read</, `${file}: estimated reading time`);
     assert.equal(meta('og:type'), 'article');
     assert(meta('article:published_time'), `${file}: article publication date is present`);
   } else assert.equal(meta('og:type'), 'website');
