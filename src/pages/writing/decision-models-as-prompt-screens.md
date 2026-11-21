@@ -21,7 +21,7 @@ So, given how fast and cheap decision models are, I wanted to know whether one w
 
 ## What counts as a prompt attack
 
-There is no agreed definition to test against. NIST's taxonomy of adversarial machine learning, AI 100-2e2025, lists attack classes and techniques, but it classifies attacks partly by the attacker's goal. A goal is not visible in a single text. In an early pilot, when I had a labeler follow NIST closely, we ended up tracking how harmful a request was instead of whether the text attacks the AI.
+There is no agreed definition to test against. NIST's _Adversarial Machine Learning: A Taxonomy and Terminology of Attacks and Mitigations_[^1], lists attack classes and techniques, but it classifies attacks partly by the attacker's goal. A goal is not visible in a single text. In an early pilot, when I had a labeler follow NIST closely, we ended up tracking how harmful a request was instead of whether the text attacks the AI.
 
 So I tried again to write a definition that would concern itself with technique and intent, rather than harm. It looks at the text and at its channel, the route by which the text reached the AI. A text arrives through one of two channels: a **user message**, written by the person using the AI, or **content** the AI reads on their behalf, such as an email or a tool's output. The text is an attack if it does one of four things:
 
@@ -383,3 +383,6 @@ The type question is a Choice, which returns one of the four attack types with a
   }
 }
 ```
+
+---
+[^1]: Vassilev, A. , Oprea, A. , Fordyce, A. , Anderson, H. , Davies, X. and Hamin, M. (2025), Adversarial Machine Learning: A Taxonomy and Terminology of Attacks and Mitigations, NIST Trustworthy and Responsible AI, National Institute of Standards and Technology, Gaithersburg, MD, \[online\], https://doi.org/10.6028/NIST.AI.100-2e2025, https://tsapps.nist.gov/publication/get_pdf.cfm?pub_id=959735 (Accessed November 20, 2026)
