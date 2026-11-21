@@ -85,7 +85,11 @@ for (const file of htmlFiles) {
     const url = new URL(href, `https://site.test/${file.replace(/index\.html$/, '')}`);
     const path = extname(url.pathname) ? url.pathname : `${url.pathname.replace(/\/$/, '')}/index.html`;
     const target = await readFile(join('dist', decodeURI(path)), 'utf8');
-    if (url.hash) assert(target.includes(`id="${decodeURIComponent(url.hash.slice(1))}"`), `${file}: missing anchor ${href}`);
+    if (url.hash) {
+      const fragment = url.hash.slice(1);
+      const found = target.includes(`id="${fragment}"`) || target.includes(`id="${decodeURIComponent(fragment)}"`);
+      assert(found, `${file}: missing anchor ${href}`);
+    }
   }
 }
 console.log(`${htmlFiles.length} static pages checked: navigation, internal links, archive order, projects, SEO, and sharing images.`);
