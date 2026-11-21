@@ -94,11 +94,13 @@ main { padding-top: 32px; overflow-wrap: anywhere; }
 .prose blockquote p { line-height: 1.4; }
 .prose ul, .prose ol { padding-left: 24px; }
 .prose li + li { margin-top: 8px; }
-.prose pre { overflow-x: auto; padding: 18px; font-size: .85rem; }
-.prose pre code { background: none; padding: 0; }
+.prose pre { overflow-x: auto; padding: 18px; border: 1px solid var(--line); font-size: .85rem; line-height: 1.5; white-space: pre-wrap; }
+.prose pre code { background: none; padding: 0; color: inherit; }
+.astro-code { background-color: light-dark(var(--shiki-light-bg), var(--shiki-dark-bg)); }
+.astro-code, .astro-code span { color: light-dark(var(--shiki-light), var(--shiki-dark)); }
 .prose code { background: var(--desk); color: var(--ink); padding: 2px 5px; font-size: .85em; }
-.prose table { display: block; max-width: 100%; overflow-x: auto; border-collapse: collapse; }
-.prose th, .prose td { border-bottom: 1px solid var(--line); padding: 8px 14px; text-align: left; }
+.prose table { display: block; max-width: 100%; overflow-x: auto; border-collapse: collapse; margin-bottom: 24px; }
+.prose th, .prose td { border-bottom: 1px solid var(--line); padding: 8px 14px; text-align: left; overflow-wrap: normal; }
 .companion { margin-top: 30px; padding: 22px; border: 1px solid var(--line); background: var(--peach); font-family: 'DM Sans', sans-serif; }
 .companion h2 { margin: 10px 0; font-size: 1.4rem; }
 .companion > p:not(.label) { font-size: .9rem; }
@@ -119,10 +121,16 @@ main { padding-top: 32px; overflow-wrap: anywhere; }
   .year { padding-left: 20px; padding-right: 20px; }
   .project-grid .window:nth-child(even) { margin-top: 0; }
   .companion { padding: 18px; }
+  .prose table { font-size: .85rem; line-height: 1.4; }
+  .prose th, .prose td { padding: 8px 5px; }
+  .prose th:first-child, .prose td:first-child { padding-left: 0; }
+  .prose pre { padding: 12px; font-size: .75rem; }
 }
 
 @media (max-width: 420px) {
   .site-name-detail { display: none; }
+  :root { --page-gutter: 8px; }
+  .window-content, .post-window .window-content { padding: 20px 14px; }
 }
 
 @media (pointer: coarse) {
