@@ -4,19 +4,19 @@ title: Hello world
 date: "2026-10-01"
 description: A quick introduction
 ---
-I recently received a grant from Coefficient Giving to help in the development of automated auditing of frontier AI labs, and to make the resulting tools, protocols, and evaluation findings freely available to the public. This is one of those places I hope to make my work public!
+Hi!
 
-Why do I want to do this work? Well among certain circles it will be obvious, and among others incredibly controversial, to say "AI presents the greatest threat to society today." My stance is that frontier AI labs are moving really, really fast, and if they keep this up it's only a matter of time until they break something big. Are we all going to die? I don't know, probably not, but we might experience to very avoidable catastrophes, and that seems pretty unacceptable†. 
+I wanted to create a place where I could make public some of my work, thoughts, experiments, etc.
 
-## Why specifically automated auditing?
+A current fascination of mine is AI safety and control. It seems to me that frontier AI labs are moving really, really fast, and at this pace it's only a matter of time until something big breaks. Are we all going to die? Probably not! But we might experience very avoidable catastrophes, and that seems pretty unacceptable†. 
 
-I believe one way to reduce the space of avoidable catastrophes would be an internationally coordinated AI slowdown or pause, and in order for that to happen there needs to be systems in place that are capable of monitoring AI labs.
+## What to do about it?
+
+I believe one way to reduce the space of such catastrophes would be a coordinated AI slowdown or pause, and in order for that to happen there needs to be systems in place that are capable of monitoring AI labs.
 
 Currently, there are great organizations trying to push this ball forward ([METR](https://metr.org), [Averi](https://www.averi.org), [Redwood Research](https://www.redwoodresearch.org/), etc.) with a ton of work to do, so I'm hoping there is room for collaboration and coordination!
 
-## What this site?
-
-I hope to make this space a place where I can document my thoughts, demos, and other works. I've been working on a little AI control demo called  [Capture the flag](/writing/capture-the-flag/). It's a game that challenges users to find a way to instruct an agent to both do a real task, but also secretly accomplish a side task that would otherwise be against the rules. Basically, you need to get an AI to both fix a bug and also steal the contents of a file protected by another AI, without getting caught by that other AI.
+In the meanwhile, I hope to make this space a place where I post cool stuff along the way. For example, I've been working on a little AI control demo called  [Capture the flag](/writing/capture-the-flag/). It's a game that challenges users to find a way to instruct an agent to both fix a bug and also steal the contents of a file protected by a monitor AI, all without being detected by the monitor.
 
 ---
 
