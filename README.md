@@ -1,7 +1,8 @@
 # Jonathan Pollack
 
-A small static Astro site with the Workbench design: a home page, writing
-archive, Markdown essays, and project windows. Plain CSS, no client JavaScript.
+A small static Astro site with the Blue pencil design: a home page, writing
+archive, Markdown essays, and project windows. Plain CSS and a few small
+scripts; no frameworks. Tests cap JavaScript at 8 KB per page.
 
 ## Run locally
 
@@ -39,10 +40,12 @@ canonical URL, description, Open Graph tags, and a large Twitter sharing card.
 The sitemap is generated at build time and listed in `public/robots.txt`.
 
 Each page gets a 1200×630 PNG built from its title and description, with the
-JP monogram from `public/favicon.svg`. Static page metadata lives in
+portrait from `src/assets/portrait.jpg`. Static page metadata lives in
 `src/data/site.ts`; essay cards use Markdown frontmatter. Adding or editing an
-essay updates its card on the next build. The bundled Space Grotesk font is
+essay updates its card on the next build. The bundled Source Serif 4 font is
 from Google Fonts, under the included SIL Open Font License.
+sharp's macOS build ignores the bundled font, so cards built on a Mac use a
+system font. Vercel builds on Linux, where the bundled font is used.
 
 To give an essay a custom preview instead, put a PNG or JPEG in
 `public/` and add these optional frontmatter fields:

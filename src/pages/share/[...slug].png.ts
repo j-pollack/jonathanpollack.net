@@ -22,12 +22,16 @@ export const getStaticPaths: GetStaticPaths = () => [
   props: data,
 }));
 
+// Blue pencil palette, matching the light theme in global.css.
+const color = { paper: '#f3f5f6', ink: '#17212b', graphite: '#4f5a65', pencil: '#a6dcef', pencilInk: '#1c5e78' };
+const portraitSize = 240;
+
 // Pango wraps text with the bundled font; no browser or network is needed at build time.
-const textImage = async (text: string, size: number, width: number, height: number) => {
+const textImage = async (text: string, font: string, foreground: string, width: number, height: number) => {
   const options = {
-    text: `<span foreground="#26313b">${escape(text)}</span>`,
-    font: `Space Grotesk ${size}`,
-    fontfile: resolve('src/assets/fonts/SpaceGrotesk.ttf'),
+    text: `<span foreground="${foreground}">${escape(text)}</span>`,
+    font,
+    fontfile: resolve('src/assets/fonts/SourceSerif4.ttf'),
     width, rgba: true, wrap: 'word-char' as const,
   };
   const rendered = await sharp({ text: options }).png().toBuffer({ resolveWithObject: true });
@@ -35,26 +39,28 @@ const textImage = async (text: string, size: number, width: number, height: numb
   return sharp({ text: { ...options, height } }).png().toBuffer({ resolveWithObject: true });
 };
 
+const portrait = await sharp('src/assets/portrait.jpg').resize(portraitSize, portraitSize).composite([{
+  input: Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="${portraitSize}" height="${portraitSize}"><circle cx="${portraitSize / 2}" cy="${portraitSize / 2}" r="${portraitSize / 2}"/></svg>`),
+  blend: 'dest-in',
+}]).png().toBuffer();
+
+// The card mirrors the site: portrait in the margin, a blue rule, then the text column.
+const background = Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630">
+  <rect width="1200" height="630" fill="${color.paper}"/>
+  <rect width="1200" height="10" fill="${color.pencilInk}"/>
+  <rect x="358" y="70" width="4" height="490" fill="${color.pencil}"/>
+</svg>`);
+
 export const GET: APIRoute = async ({ props }) => {
   const { title, description } = props as { title: string; description: string };
-  const heading = await textImage(title.replace(/ — Jonathan Pollack$/, ''), 60, 738, 185);
-  const summary = await textImage(description, 30, 738, 140);
-  const label = await textImage('jonathanpollack.net', 22, 980, 38);
-  const footer = await textImage('Jonathan Pollack · writing + experiments', 20, 900, 32);
-  const logo = await sharp('public/favicon.svg').resize(240, 240).png().toBuffer();
-  const background = Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630">
-    <rect width="1200" height="630" fill="#faf2da"/>
-    <rect x="28" y="28" width="1144" height="574" fill="#faf2da" stroke="#26313b" stroke-width="8"/>
-    <path d="M32 32H1168V108H32Z" fill="#f2bba9"/>
-    <path d="M32 112H1168M32 552H1168" stroke="#26313b" stroke-width="4"/>
-    <rect x="1116" y="52" width="32" height="32" fill="#9cbdca" stroke="#26313b" stroke-width="4"/>
-  </svg>`);
+  const label = await textImage('jonathanpollack.net', 'Source Serif 4, 24', color.graphite, 720, 40);
+  const heading = await textImage(title.replace(/ — Jonathan Pollack$/, ''), 'Source Serif 4, SemiBold 58', color.ink, 720, 230);
+  const summary = await textImage(description, 'Source Serif 4, 30', color.graphite, 720, 150);
   const png = await sharp(background).composite([
-    { input: label.data, left: 60, top: 58 },
-    { input: logo, left: 72, top: 210 },
-    { input: heading.data, left: 370, top: 170 },
-    { input: summary.data, left: 370, top: 200 + heading.info.height },
-    { input: footer.data, left: 60, top: 570 },
+    { input: portrait, left: 60, top: 195 },
+    { input: label.data, left: 410, top: 80 },
+    { input: heading.data, left: 410, top: 150 },
+    { input: summary.data, left: 410, top: 180 + heading.info.height },
   ]).png().toBuffer();
   return new Response(new Uint8Array(png), { headers: { 'Content-Type': 'image/png' } });
 };

@@ -1,6 +1,6 @@
 ---
+import type { MarkdownHeading } from 'astro';
 import Layout from './Layout.astro';
-import Window from '../components/Window.astro';
 import { projects } from '../data/site';
 // Type-only: a runtime import of data/writing cycles back through every post that uses this layout.
 import type { PostFrontmatter } from '../data/writing';
@@ -9,39 +9,75 @@ const longDate = new Intl.DateTimeFormat('en-US', {
   month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC',
 });
 
-interface Props { frontmatter: PostFrontmatter }
-const { frontmatter } = Astro.props;
+interface Props { frontmatter: PostFrontmatter; headings: MarkdownHeading[] }
+const { frontmatter, headings } = Astro.props;
 const project = projects.find(project => project.id === frontmatter.project);
-const filename = Astro.url.pathname.split('/').filter(Boolean).at(-1)!.replaceAll('-', '_');
 // External essay links open in a new tab.
 const body = (await Astro.slots.render('default')).replaceAll(/<a href="(?=https?:)/g, '<a target="_blank" rel="noopener" href="');
 const wordsPerMinute = 225;
 const text = body.replace(/<[^>]+>/g, ' ').replace(/&(?:#\w+|\w+);/g, ' ');
 const wordCount = text.match(/\S+/g)?.length ?? 0;
 const minutes = Math.max(1, Math.ceil(wordCount / wordsPerMinute));
+// Short essays read fine without a contents list.
+const minSectionsForContents = 4;
+const sections = headings.filter(heading => heading.depth === 2 && heading.slug !== 'footnote-label');
+const contents = sections.length >= minSectionsForContents ? sections : [];
 ---
 
 <Layout title={`${frontmatter.title} — Jonathan Pollack`} description={frontmatter.description}
   image={frontmatter.image} imageAlt={frontmatter.imageAlt} publishedTime={frontmatter.date}>
-  <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/writing/">Writing</a></nav>
-  <Window title={`${filename}.md`} class="post-window">
-    <article>
-      <div class="post-meta"><span>Essay</span><time datetime={frontmatter.date}>{longDate.format(new Date(frontmatter.date))}</time><span>{minutes} min read</span></div>
+  <article class="row post">
+    <aside class="margin post-margin">
+      <p class="post-meta"><time datetime={frontmatter.date}>{longDate.format(new Date(frontmatter.date))}</time><span>{minutes} min read</span></p>
+      {contents.length > 0 && (
+        <nav class="contents contents-margin" aria-label="Contents">
+          <p class="contents-title">Contents</p>
+          <ol>{contents.map(section => <li><a href={`#${section.slug}`}>{section.text}</a></li>)}</ol>
+        </nav>
+      )}
+      {contents.length > 0 && (
+        <details class="contents contents-inline">
+          <summary>Contents</summary>
+          <ol>{contents.map(section => <li><a href={`#${section.slug}`}>{section.text}</a></li>)}</ol>
+        </details>
+      )}
+    </aside>
+    <div class="body">
       <h1>{frontmatter.title}</h1>
       <p class="dek">{frontmatter.description}</p>
       <div class="prose" set:html={body} />
       {project && (
         <aside class="companion" aria-labelledby="companion-heading">
-          <p class="label">Companion experiment / {project.id.replaceAll('-', '_')}.app</p>
-          <h2 id="companion-heading">Read it. Then poke at it.</h2>
+          <h2 id="companion-heading">Play the experiment</h2>
           <p>{project.description}</p>
           <div class="actions">
-            {project.demo && <a class="action" href={project.demo}>Try the demo ↗</a>}
-            <a class:list={['action', { secondary: project.demo }]} href={`/projects/#${project.id}`}>See project notes →</a>
+            {project.demo && <a class="button" href={project.demo} target="_blank" rel="noopener">Play {project.title.toLowerCase()} ↗</a>}
+            {project.source && <a href={project.source} target="_blank" rel="noopener">Source on GitHub ↗</a>}
           </div>
         </aside>
       )}
-    </article>
-    <div class="post-bottom"><a href="/writing/">← All writing</a>{project?.source && <a href={project.source}>Source on GitHub ↗</a>}</div>
-  </Window>
+      <p class="post-bottom"><a href="/writing/">All writing</a></p>
+    </div>
+  </article>
 </Layout>
+
+<script>
+  // Browsers without CSS :target-current (Firefox today) mark the section in view here.
+  // A heading counts as current once it scrolls above this share of the viewport height.
+  const activeLine = 0.3;
+  if (!CSS.supports('selector(:target-current)')) {
+    const links = [...document.querySelectorAll<HTMLAnchorElement>('.contents-margin a')];
+    const headings = links.map(link => document.getElementById(decodeURIComponent(link.hash.slice(1))));
+    let frame = 0;
+    const mark = () => {
+      frame = 0;
+      const passed = headings.findLastIndex(heading => heading && heading.getBoundingClientRect().top <= innerHeight * activeLine);
+      const current = Math.max(passed, 0);
+      links.forEach((link, index) => index === current ? link.setAttribute('aria-current', 'location') : link.removeAttribute('aria-current'));
+    };
+    if (links.length) {
+      addEventListener('scroll', () => { frame ||= requestAnimationFrame(mark); }, { passive: true });
+      mark();
+    }
+  }
+</script>
