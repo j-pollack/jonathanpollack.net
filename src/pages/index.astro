@@ -1,5 +1,7 @@
 ---
+import { Image } from 'astro:assets';
 import Layout from '../layouts/Layout.astro';
+import portrait from '../assets/portrait.jpg';
 import { posts, shortDate } from '../data/writing';
 import { projects } from '../data/site';
 
@@ -9,16 +11,19 @@ const featuredEssay = posts.find(post => post.frontmatter.project === featured?.
 
 <Layout>
   <div class="row hero">
+    <div class="margin hero-portrait">
+      <Image src={portrait} alt="Illustrated portrait of Jonathan" width={384} loading="eager" />
+    </div>
     <div class="body">
-      <h1>Jonathan Pollack</h1>
-      <p class="lede">I write essays about AI control and oversight, and build experiments you can play to test the ideas.</p>
+      <h1>Hi, I’m Jonathan</h1>
+      <p class="lede">I write about stuff and build experiments you can play with.</p>
     </div>
   </div>
   {featured && (
     <section class="row" aria-labelledby="play-heading">
       <h2 class="margin" id="play-heading">Try the experiment</h2>
       <div class="body">
-        <h3 class="feature-title"><a href={`/projects/#${featured.id}`}>{featured.title}</a></h3>
+        <h3 class="feature-title">{featured.title}</h3>
         <p>{featured.description}</p>
         <div class="actions">
           {featured.demo && <a class="button" href={featured.demo} target="_blank" rel="noopener">Play {featured.title.toLowerCase()} ↗</a>}

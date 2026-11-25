@@ -21,6 +21,7 @@ const minutes = Math.max(1, Math.ceil(wordCount / wordsPerMinute));
 // Short essays read fine without a contents list.
 const minSectionsForContents = 4;
 const sections = headings.filter(heading => heading.depth === 2 && heading.slug !== 'footnote-label');
+const contents = sections.length >= minSectionsForContents ? sections : [];
 ---
 
 <Layout title={`${frontmatter.title} — Jonathan Pollack`} description={frontmatter.description}
@@ -28,12 +29,16 @@ const sections = headings.filter(heading => heading.depth === 2 && heading.slug 
   <article class="row post">
     <aside class="margin post-margin">
       <p class="post-meta"><time datetime={frontmatter.date}>{longDate.format(new Date(frontmatter.date))}</time><span>{minutes} min read</span></p>
-      {sections.length >= minSectionsForContents && (
-        <details class="contents">
+      {contents.length > 0 && (
+        <nav class="contents contents-margin" aria-label="Contents">
+          <p class="contents-title">Contents</p>
+          <ol>{contents.map(section => <li><a href={`#${section.slug}`}>{section.text}</a></li>)}</ol>
+        </nav>
+      )}
+      {contents.length > 0 && (
+        <details class="contents contents-inline">
           <summary>Contents</summary>
-          <nav aria-label="Contents">
-            <ol>{sections.map(section => <li><a href={`#${section.slug}`}>{section.text}</a></li>)}</ol>
-          </nav>
+          <ol>{contents.map(section => <li><a href={`#${section.slug}`}>{section.text}</a></li>)}</ol>
         </details>
       )}
     </aside>
@@ -47,7 +52,6 @@ const sections = headings.filter(heading => heading.depth === 2 && heading.slug 
           <p>{project.description}</p>
           <div class="actions">
             {project.demo && <a class="button" href={project.demo} target="_blank" rel="noopener">Play {project.title.toLowerCase()} ↗</a>}
-            <a href={`/projects/#${project.id}`}>Project notes</a>
             {project.source && <a href={project.source} target="_blank" rel="noopener">Source on GitHub ↗</a>}
           </div>
         </aside>
