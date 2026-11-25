@@ -60,3 +60,24 @@ const contents = sections.length >= minSectionsForContents ? sections : [];
     </div>
   </article>
 </Layout>
+
+<script>
+  // Browsers without CSS :target-current (Firefox today) mark the section in view here.
+  // A heading counts as current once it scrolls above this share of the viewport height.
+  const activeLine = 0.3;
+  if (!CSS.supports('selector(:target-current)')) {
+    const links = [...document.querySelectorAll<HTMLAnchorElement>('.contents-margin a')];
+    const headings = links.map(link => document.getElementById(decodeURIComponent(link.hash.slice(1))));
+    let frame = 0;
+    const mark = () => {
+      frame = 0;
+      const passed = headings.findLastIndex(heading => heading && heading.getBoundingClientRect().top <= innerHeight * activeLine);
+      const current = Math.max(passed, 0);
+      links.forEach((link, index) => index === current ? link.setAttribute('aria-current', 'location') : link.removeAttribute('aria-current'));
+    };
+    if (links.length) {
+      addEventListener('scroll', () => { frame ||= requestAnimationFrame(mark); }, { passive: true });
+      mark();
+    }
+  }
+</script>

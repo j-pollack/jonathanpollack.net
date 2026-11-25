@@ -1,7 +1,8 @@
 # Jonathan Pollack
 
 A small static Astro site with the Blue pencil design: a home page, writing
-archive, Markdown essays, and project windows. Plain CSS, no client JavaScript.
+archive, Markdown essays, and project windows. Plain CSS and a few small
+scripts; no frameworks. Tests cap JavaScript at 8 KB per page.
 
 ## Run locally
 

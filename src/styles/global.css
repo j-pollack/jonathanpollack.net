@@ -44,9 +44,12 @@ img, video { max-width: 100%; height: auto; }
 .body .button { text-decoration: none; }
 .body a:hover, .site-footer a:hover, .contents a:hover { background: var(--pencil); }
 .contents a { text-decoration: none; }
-/* The section in view is marked as you scroll (CSS scroll-target-group; browsers without it show no mark). */
+/* The section in view is marked as you scroll with CSS scroll-target-group. */
 .contents-margin a { display: block; padding-left: .6rem; border-left: 4px solid transparent; }
 .contents a:target-current { color: var(--pencil-ink); font-weight: 700; border-left-color: var(--pencil-ink); }
+/* Same mark, set by the script in Post.astro where :target-current is unsupported. Kept as a separate rule
+   because an unknown pseudo-class would void a combined selector list. */
+.contents a[aria-current] { color: var(--pencil-ink); font-weight: 700; border-left-color: var(--pencil-ink); }
 
 .masthead, main, .site-footer { width: min(100% - 2 * var(--gutter), var(--page)); margin-inline: auto; }
 .masthead, .row { display: grid; grid-template-columns: var(--rail) minmax(0, var(--measure)); column-gap: var(--gap); }

@@ -5,6 +5,9 @@ import { projects, shareImagePath } from '../src/data/site.ts';
 import sharp from 'sharp';
 import { createHash } from 'node:crypto';
 
+// Keeps the site free of framework bundles while allowing small utility scripts.
+const maxScriptBytesPerPage = 8 * 1024;
+
 const home = await readFile('dist/index.html', 'utf8');
 const writing = await readFile('dist/writing/index.html', 'utf8');
 const projectPage = await readFile('dist/projects/index.html', 'utf8');
@@ -74,7 +77,14 @@ for (const file of htmlFiles) {
     assert.equal(meta('og:type'), 'article');
     assert(meta('article:published_time'), `${file}: article publication date is present`);
   } else assert.equal(meta('og:type'), 'website');
-  assert.doesNotMatch(html, /<script\b/);
+  // Small utility scripts are fine; a framework bundle is not.
+  let scriptBytes = 0;
+  for (const [, attributes, inline] of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/g)) {
+    const src = attributes.match(/\bsrc="([^"]+)"/)?.[1];
+    assert(!src || src.startsWith('/'), `${file}: scripts are served from this site`);
+    scriptBytes += src ? (await readFile(join('dist', decodeURI(src)))).length : Buffer.byteLength(inline);
+  }
+  assert(scriptBytes <= maxScriptBytesPerPage, `${file}: ${scriptBytes} bytes of JavaScript exceeds ${maxScriptBytesPerPage}`);
   assert.match(html, /<html lang="en">/);
   assert.match(html, /name="viewport"/);
   assert.match(html, /class="skip-link" href="#main"/);
