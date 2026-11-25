@@ -2,7 +2,7 @@
 layout: ../../layouts/Post.astro
 title: Can a decision model screen prompt attacks as well as Claude?
 date: "2026-11-19"
-description: an experiment comparing jev to claude in prompt guarding
+description: An experiment comparing jev to claude in prompt guarding
 ---
 
 **TL;DR.** I was able to get Jev, a decision model, to screen text for prompt attacks within 4 points of Claude Sonnet 5.5's accuracy. I built a corpus of 16,326 texts from attack datasets and from real chatbot traffic, which contains occasional attacks. Jev and Sonnet got the same written definition of a prompt attack, and I did not tune either prompt. On my blind audit of 500 texts, Jev came within half a point of Sonnet on real traffic. On the labeled datasets it trailed by 4 points, with a 95% confidence interval of 2.7 to 5.2. Most of Jev's gap is false positives: it called 17% of harmless dataset texts attacks, where Sonnet called 12%. Labeling the corpus cost $0.96 with Jev and $17.60 with Sonnet at batch rates.
