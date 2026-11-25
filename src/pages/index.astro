@@ -13,7 +13,6 @@ const featured = projects[0];
     <Window title="about_me.txt" class="about-window">
       <h1>Hi there,<br />I’m Jonathan.</h1>
       <p class="intro">I write about stuff and build experiments you can play with.</p>
-      <p class="intro"></p>
       <div class="current-work">
         <h2 class="label">Currently exploring</h2>
         <p>AI control, oversight, and making those ideas more legible</p>
@@ -25,7 +24,7 @@ const featured = projects[0];
           <p class="label">From the notebook</p>
           <h2><a href={latest.url}>{latest.frontmatter.title}</a></h2>
           <p>{latest.frontmatter.description}</p>
-          <div class="text-links"><a href={latest.url}>Read the essay →</a><a href="/writing/">All writing →</a></div>
+          <div class="text-links"><a href={latest.url}>Read the essay</a><a href="/writing/">All writing</a></div>
         </Window>
       )}
       {featured && (
@@ -33,7 +32,7 @@ const featured = projects[0];
           <p class="label">{featured.category}</p>
           <h2><a href={`/projects/#${featured.id}`}>{featured.title}</a></h2>
           <p>{featured.description}</p>
-          <div class="text-links"><a href="/projects/">Explore projects →</a></div>
+          <div class="text-links"><a href="/projects/">All projects</a></div>
         </Window>
       )}
     </div>

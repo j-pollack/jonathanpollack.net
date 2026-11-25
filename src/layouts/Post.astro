@@ -4,13 +4,19 @@ import Window from '../components/Window.astro';
 import { projects } from '../data/site';
 // Type-only: a runtime import of data/writing cycles back through every post that uses this layout.
 import type { PostFrontmatter } from '../data/writing';
+import type { MarkdownHeading } from 'astro';
 
 const longDate = new Intl.DateTimeFormat('en-US', {
   month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC',
 });
 
-interface Props { frontmatter: PostFrontmatter }
-const { frontmatter } = Astro.props;
+interface Props { frontmatter: PostFrontmatter; headings: MarkdownHeading[] }
+const { frontmatter, headings } = Astro.props;
+// Long essays get a contents list; short ones read fine without it.
+const minSectionsForContents = 4;
+// Astro adds a hidden "Footnotes" heading; it is not a section of the essay.
+const sections = headings.filter(heading => heading.depth === 2 && heading.slug !== 'footnote-label');
+const contents = sections.length >= minSectionsForContents ? sections : [];
 const project = projects.find(project => project.id === frontmatter.project);
 const filename = Astro.url.pathname.split('/').filter(Boolean).at(-1)!.replaceAll('-', '_');
 // External essay links open in a new tab.
@@ -24,11 +30,25 @@ const minutes = Math.max(1, Math.ceil(wordCount / wordsPerMinute));
 <Layout title={`${frontmatter.title} — Jonathan Pollack`} description={frontmatter.description}
   image={frontmatter.image} imageAlt={frontmatter.imageAlt} publishedTime={frontmatter.date}>
   <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/writing/">Writing</a></nav>
+  <div class:list={['post-layout', { 'has-contents': contents.length }]}>
+  {contents.length > 0 && (
+    <nav class="contents-window" aria-label="Contents">
+      <Window title="contents">
+        <ul class="contents">{contents.map(heading => <li><a href={`#${heading.slug}`}>{heading.text}</a></li>)}</ul>
+      </Window>
+    </nav>
+  )}
   <Window title={`${filename}.md`} class="post-window">
     <article>
-      <div class="post-meta"><span>Essay</span><time datetime={frontmatter.date}>{longDate.format(new Date(frontmatter.date))}</time><span>{minutes} min read</span></div>
+      <div class="post-meta"><time datetime={frontmatter.date}>{longDate.format(new Date(frontmatter.date))}</time><span>{minutes} min read</span></div>
       <h1>{frontmatter.title}</h1>
       <p class="dek">{frontmatter.description}</p>
+      {contents.length > 0 && (
+        <details class="contents-inline">
+          <summary>Contents</summary>
+          <ul class="contents">{contents.map(heading => <li><a href={`#${heading.slug}`}>{heading.text}</a></li>)}</ul>
+        </details>
+      )}
       <div class="prose" set:html={body} />
       {project && (
         <aside class="companion" aria-labelledby="companion-heading">
@@ -37,11 +57,12 @@ const minutes = Math.max(1, Math.ceil(wordCount / wordsPerMinute));
           <p>{project.description}</p>
           <div class="actions">
             {project.demo && <a class="action" href={project.demo}>Try the demo ↗</a>}
-            <a class:list={['action', { secondary: project.demo }]} href={`/projects/#${project.id}`}>See project notes →</a>
+            <a class:list={['action', { secondary: project.demo }]} href={`/projects/#${project.id}`}>See project notes</a>
           </div>
         </aside>
       )}
     </article>
     <div class="post-bottom"><a href="/writing/">← All writing</a>{project?.source && <a href={project.source}>Source on GitHub ↗</a>}</div>
   </Window>
+  </div>
 </Layout>
