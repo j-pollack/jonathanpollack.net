@@ -1,41 +1,42 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Window from '../components/Window.astro';
-import { posts } from '../data/writing';
+import { posts, shortDate } from '../data/writing';
 import { projects } from '../data/site';
 
-const latest = posts[0];
 const featured = projects[0];
+const featuredEssay = posts.find(post => post.frontmatter.project === featured?.id);
 ---
 
 <Layout>
-  <div class="home-grid">
-    <Window title="about_me.txt" class="about-window">
-      <h1>Hi there,<br />I’m Jonathan.</h1>
-      <p class="intro">I write about stuff and build experiments you can play with.</p>
-      <p class="intro"></p>
-      <div class="current-work">
-        <h2 class="label">Currently exploring</h2>
-        <p>AI control, oversight, and making those ideas more legible</p>
-      </div>
-    </Window>
-    <div class="home-stack">
-      {latest && (
-        <Window title="latest_essay.md" id="writing">
-          <p class="label">From the notebook</p>
-          <h2><a href={latest.url}>{latest.frontmatter.title}</a></h2>
-          <p>{latest.frontmatter.description}</p>
-          <div class="text-links"><a href={latest.url}>Read the essay →</a><a href="/writing/">All writing →</a></div>
-        </Window>
-      )}
-      {featured && (
-        <Window title={`${featured.id.replaceAll('-', '_')}.app`} id="projects">
-          <p class="label">{featured.category}</p>
-          <h2><a href={`/projects/#${featured.id}`}>{featured.title}</a></h2>
-          <p>{featured.description}</p>
-          <div class="text-links"><a href="/projects/">Explore projects →</a></div>
-        </Window>
-      )}
+  <div class="row hero">
+    <div class="body">
+      <h1>Jonathan Pollack</h1>
+      <p class="lede">I write essays about AI control and oversight, and build experiments you can play to test the ideas.</p>
     </div>
   </div>
+  {featured && (
+    <section class="row" aria-labelledby="play-heading">
+      <h2 class="margin" id="play-heading">Try the experiment</h2>
+      <div class="body">
+        <h3 class="feature-title"><a href={`/projects/#${featured.id}`}>{featured.title}</a></h3>
+        <p>{featured.description}</p>
+        <div class="actions">
+          {featured.demo && <a class="button" href={featured.demo} target="_blank" rel="noopener">Play {featured.title.toLowerCase()} ↗</a>}
+          {featuredEssay && <a href={featuredEssay.url}>Read the essay behind it</a>}
+        </div>
+      </div>
+    </section>
+  )}
+  <section class="row" aria-labelledby="writing-heading">
+    <h2 class="margin" id="writing-heading">Writing</h2>
+    <ul class="body entries">
+      {posts.map(post => (
+        <li class="entry">
+          <h3><a href={post.url}>{post.frontmatter.title}</a></h3>
+          <p>{post.frontmatter.description}</p>
+          <p class="when"><time datetime={post.frontmatter.date}>{shortDate.format(new Date(post.frontmatter.date))}</time></p>
+        </li>
+      ))}
+    </ul>
+  </section>
 </Layout>

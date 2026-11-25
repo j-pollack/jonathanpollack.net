@@ -1,26 +1,28 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Window from '../components/Window.astro';
 import { projects, pages } from '../data/site';
 import { posts } from '../data/writing';
 ---
 
 <Layout {...pages['/projects/']}>
-  <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span>Projects</span></nav>
-  <div class="page-intro"><h1>Projects</h1><p class="intro">Little experiments, useful tools, and ideas made tangible.</p></div>
-  <div class="project-grid">
-    {projects.map(project => {
-      const essay = posts.find(post => post.frontmatter.project === project.id);
-      return (
-        <Window title={`${project.id.replaceAll('-', '_')}.app`} id={project.id}>
-          <p class="label">{project.category}</p><h2>{project.title}</h2><p>{project.description}</p>
-          <div class="actions">
-            {project.demo ? <a class="action" href={project.demo}>Launch demo ↗</a> : <span class="planned">Coming soon</span>}
-            {project.source && <a href={project.source}>View source ↗</a>}
-          </div>
-          {essay && <div class="project-context"><p class="label">The idea behind it</p><a href={essay.url}>{essay.frontmatter.title}&nbsp;→</a></div>}
-        </Window>
-      );
-    })}
+  <div class="row page-head">
+    <div class="body"><h1>Projects</h1><p class="lede">Experiments you can play, and the tools behind them.</p></div>
   </div>
+  {projects.map(project => {
+    const essay = posts.find(post => post.frontmatter.project === project.id);
+    return (
+      <section class="row" id={project.id} aria-labelledby={`${project.id}-heading`}>
+        <p class="margin">{project.category}</p>
+        <div class="body">
+          <h2 class="feature-title" id={`${project.id}-heading`}>{project.title}</h2>
+          <p>{project.description}</p>
+          <div class="actions">
+            {project.demo ? <a class="button" href={project.demo} target="_blank" rel="noopener">Launch demo ↗</a> : <span class="planned">Coming soon</span>}
+            {project.source && <a href={project.source} target="_blank" rel="noopener">View source ↗</a>}
+            {essay && <a href={essay.url}>Read the essay</a>}
+          </div>
+        </div>
+      </section>
+    );
+  })}
 </Layout>
