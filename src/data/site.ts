@@ -6,7 +6,7 @@ export const greeting = 'Hi, I’m Jonathan';
 export const pages = {
   '/': {
     title: 'Jonathan Pollack',
-    description: 'Writings and interactive experiments.',
+    description: 'This is my site for posting my writings, experimental results, and projects I’m working on.',
   },
   '/writing/': {
     title: 'Writing — Jonathan Pollack',
