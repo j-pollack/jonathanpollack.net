@@ -51,10 +51,13 @@ for (const file of htmlFiles) {
   assert(html.includes(`<link rel="canonical" href="${canonical}"`), `${file}: canonical uses the production URL`);
   assert(sitemapURLs.includes(canonical), `${file}: canonical is in the sitemap`);
   assert.equal(meta('og:url'), canonical);
-  assert.equal(meta('og:title'), title);
+  // Link previews often show only the share title, so it carries a blurb instead of "<page> — Jonathan Pollack".
+  const shareTitle = meta('og:title');
+  assert(shareTitle && !shareTitle.endsWith('— Jonathan Pollack'), `${file}: share title is a blurb, not the page title`);
+  if (!file.startsWith('writing/') || file === 'writing/index.html') assert.equal(shareTitle, description, `${file}: share title is the page blurb`);
   assert.equal(meta('og:description'), description);
   assert.equal(meta('twitter:card'), 'summary_large_image');
-  assert.equal(meta('twitter:title'), title);
+  assert.equal(meta('twitter:title'), shareTitle);
   assert.equal(meta('twitter:description'), description);
   assert.equal(meta('twitter:image'), meta('og:image'));
   assert(meta('og:image:alt') && meta('twitter:image:alt'), `${file}: image descriptions are present`);

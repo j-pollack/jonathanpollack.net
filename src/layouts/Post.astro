@@ -24,7 +24,7 @@ const sections = headings.filter(heading => heading.depth === 2 && heading.slug 
 const contents = sections.length >= minSectionsForContents ? sections : [];
 ---
 
-<Layout title={`${frontmatter.title} — Jonathan Pollack`} description={frontmatter.description}
+<Layout title={`${frontmatter.title} — Jonathan Pollack`} description={frontmatter.description} shareTitle={frontmatter.title}
   image={frontmatter.image} imageAlt={frontmatter.imageAlt} publishedTime={frontmatter.date}>
   <article class="row post">
     <aside class="margin post-margin">

@@ -13,8 +13,9 @@ writeFileSync(fontConfig, `<fontconfig><dir>${escape(resolve('src/assets/fonts')
 process.env.FONTCONFIG_FILE = fontConfig;
 
 export const getStaticPaths: GetStaticPaths = () => [
-  // The home card greets instead of repeating the name the link preview already shows as its title.
-  ...Object.entries(pages).map(([pathname, data]) => ({ pathname, ...data, title: pathname === '/' ? greeting : data.title })),
+  // Page cards show only a heading: the preview prints the page blurb beside the image as its title.
+  // The home card greets instead of repeating the name.
+  ...Object.entries(pages).map(([pathname, data]) => ({ pathname, title: pathname === '/' ? greeting : data.title, description: '' })),
   ...posts.filter(post => !post.frontmatter.image).map(post => ({
     pathname: post.url!, title: post.frontmatter.title, description: post.frontmatter.description,
   })),
@@ -56,13 +57,14 @@ const background = Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="1
 export const GET: APIRoute = async ({ props }) => {
   const { title, description } = props as { title: string; description: string };
   const heading = await textImage(title.replace(/ — Jonathan Pollack$/, ''), 'Source Serif 4, SemiBold 58', color.ink, 720, 230);
-  const summary = await textImage(description, 'Source Serif 4, 30', color.graphite, 720, 150);
+  const summary = description ? await textImage(description, 'Source Serif 4, 30', color.graphite, 720, 150) : undefined;
   // Link previews already print the domain, so the card holds only the heading and summary, centred vertically.
-  const textTop = Math.round((630 - heading.info.height - headingGap - summary.info.height) / 2);
+  const textHeight = heading.info.height + (summary ? headingGap + summary.info.height : 0);
+  const textTop = Math.round((630 - textHeight) / 2);
   const png = await sharp(background).composite([
     { input: portrait, left: 60, top: 195 },
     { input: heading.data, left: 410, top: textTop },
-    { input: summary.data, left: 410, top: textTop + heading.info.height + headingGap },
+    ...(summary ? [{ input: summary.data, left: 410, top: textTop + heading.info.height + headingGap }] : []),
   ]).png().toBuffer();
   return new Response(new Uint8Array(png), { headers: { 'Content-Type': 'image/png' } });
 };
