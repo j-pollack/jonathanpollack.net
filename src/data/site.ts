@@ -6,11 +6,11 @@ export const greeting = 'Hi, I’m Jonathan';
 export const pages = {
   '/': {
     title: 'Jonathan Pollack',
-    description: 'Writing and interactive experiments on AI auditing, control, and oversight.',
+    description: 'Writings and interactive experiments.',
   },
   '/writing/': {
     title: 'Writing — Jonathan Pollack',
-    description: 'Essays on AI control, auditing frontier labs, and making an international AI slowdown technically feasible.',
+    description: 'Essays on AI, experimental results, and other fun stuff.',
   },
   '/projects/': {
     title: 'Projects — Jonathan Pollack',
