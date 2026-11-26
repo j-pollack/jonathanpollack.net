@@ -3,7 +3,7 @@ import { Image } from 'astro:assets';
 import Layout from '../layouts/Layout.astro';
 import portrait from '../assets/portrait.jpg';
 import { posts, shortDate } from '../data/writing';
-import { projects } from '../data/site';
+import { greeting, projects } from '../data/site';
 
 const featured = projects[0];
 const featuredEssay = posts.find(post => post.frontmatter.project === featured?.id);
@@ -15,7 +15,7 @@ const featuredEssay = posts.find(post => post.frontmatter.project === featured?.
       <Image src={portrait} alt="Illustrated portrait of Jonathan" width={384} loading="eager" />
     </div>
     <div class="body">
-      <h1>Hi, I’m Jonathan</h1>
+      <h1>{greeting}</h1>
       <p class="lede">I write about stuff and build experiments you can play with.</p>
     </div>
   </div>
