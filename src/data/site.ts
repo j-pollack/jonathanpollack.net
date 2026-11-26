@@ -1,18 +1,20 @@
 export const github = 'https://github.com/j-pollack';
 export const contactEmail = 'contact@jonathanpollack.net';
 
+export const greeting = 'Hi, I’m Jonathan';
+
 export const pages = {
   '/': {
     title: 'Jonathan Pollack',
-    description: 'Writing and interactive experiments on AI auditing, control, and oversight by Jonathan Pollack.',
+    description: 'This is my site for posting my writings, experimental results, and projects I’m working on.',
   },
   '/writing/': {
     title: 'Writing — Jonathan Pollack',
-    description: 'Essays by Jonathan Pollack on AI control, auditing frontier labs, and making an international AI slowdown technically feasible.',
+    description: 'Essays on AI, experimental results, and other fun stuff.',
   },
   '/projects/': {
     title: 'Projects — Jonathan Pollack',
-    description: 'Experiments, tools, and ideas made tangible by Jonathan Pollack.',
+    description: 'Experiments, tools, and ideas made tangible.',
   },
 };
 

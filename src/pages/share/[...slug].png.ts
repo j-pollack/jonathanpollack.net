@@ -2,7 +2,7 @@ import type { APIRoute, GetStaticPaths } from 'astro';
 import sharp from 'sharp';
 import { resolve } from 'node:path';
 import { mkdirSync, writeFileSync } from 'node:fs';
-import { pages, shareImagePath } from '../../data/site';
+import { greeting, pages, shareImagePath } from '../../data/site';
 import { posts } from '../../data/writing';
 
 const escape = (text: string) => text.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
@@ -13,7 +13,8 @@ writeFileSync(fontConfig, `<fontconfig><dir>${escape(resolve('src/assets/fonts')
 process.env.FONTCONFIG_FILE = fontConfig;
 
 export const getStaticPaths: GetStaticPaths = () => [
-  ...Object.entries(pages).map(([pathname, data]) => ({ pathname, ...data })),
+  // The home card greets instead of repeating the name the link preview already shows as its title.
+  ...Object.entries(pages).map(([pathname, data]) => ({ pathname, ...data, title: pathname === '/' ? greeting : data.title })),
   ...posts.filter(post => !post.frontmatter.image).map(post => ({
     pathname: post.url!, title: post.frontmatter.title, description: post.frontmatter.description,
   })),
@@ -25,6 +26,7 @@ export const getStaticPaths: GetStaticPaths = () => [
 // Blue pencil palette, matching the light theme in global.css.
 const color = { paper: '#f3f5f6', ink: '#17212b', graphite: '#4f5a65', pencil: '#a6dcef', pencilInk: '#1c5e78' };
 const portraitSize = 240;
+const headingGap = 30;
 
 // Pango wraps text with the bundled font; no browser or network is needed at build time.
 const textImage = async (text: string, font: string, foreground: string, width: number, height: number) => {
@@ -53,14 +55,14 @@ const background = Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="1
 
 export const GET: APIRoute = async ({ props }) => {
   const { title, description } = props as { title: string; description: string };
-  const label = await textImage('jonathanpollack.net', 'Source Serif 4, 24', color.graphite, 720, 40);
   const heading = await textImage(title.replace(/ — Jonathan Pollack$/, ''), 'Source Serif 4, SemiBold 58', color.ink, 720, 230);
   const summary = await textImage(description, 'Source Serif 4, 30', color.graphite, 720, 150);
+  // Link previews already print the domain, so the card holds only the heading and summary, centred vertically.
+  const textTop = Math.round((630 - heading.info.height - headingGap - summary.info.height) / 2);
   const png = await sharp(background).composite([
     { input: portrait, left: 60, top: 195 },
-    { input: label.data, left: 410, top: 80 },
-    { input: heading.data, left: 410, top: 150 },
-    { input: summary.data, left: 410, top: 180 + heading.info.height },
+    { input: heading.data, left: 410, top: textTop },
+    { input: summary.data, left: 410, top: textTop + heading.info.height + headingGap },
   ]).png().toBuffer();
   return new Response(new Uint8Array(png), { headers: { 'Content-Type': 'image/png' } });
 };
