@@ -72,7 +72,7 @@ main {
 .row { padding-block: 2.5rem; }
 .margin { font-size: 1.0625rem; font-style: italic; font-weight: 400; color: var(--graphite); line-height: 1.4; padding-top: .3rem; }
 
-.site-footer { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; padding-block: 2rem 2.5rem; padding-left: calc(var(--rail) + var(--gap)); color: var(--graphite); font-size: .9375rem; }
+.site-footer { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1.5rem; padding-block: 2rem 2.5rem; padding-left: calc(var(--rail) + var(--gap)); color: var(--graphite); font-size: .9375rem; }
 .skip-link { position: absolute; top: -100px; left: 16px; z-index: 2; }
 .skip-link:focus { top: 8px; background: var(--paper); padding: 10px; }
 
@@ -171,7 +171,8 @@ main {
   .row > .margin { margin-bottom: .75rem; }
   .hero { padding-block: 2rem 1rem; }
   .hero-portrait img { max-width: 7.5rem; }
-  .site-footer { padding-left: 0; }
+  /* One line down to 320px: the footer text is about 22em wide, so the type shrinks below 375px. */
+  .site-footer { padding-left: 0; flex-wrap: nowrap; gap: 1em; white-space: nowrap; font-size: min(.9375rem, calc((100vw - 2 * var(--gutter)) / 23)); }
   .post { padding-top: 1.5rem; }
   .post-margin { position: static; max-height: none; overflow: visible; display: contents; }
   .post-meta { order: 2; display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.25rem; font-style: italic; color: var(--graphite); }
