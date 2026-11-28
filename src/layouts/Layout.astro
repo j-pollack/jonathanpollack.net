@@ -59,10 +59,10 @@ const imageURL = new URL(image, Astro.site);
       <nav aria-label="Main navigation">
         <a href="/writing/" aria-current={current === 'writing' ? 'page' : undefined}>Writing</a>
         <a href="/projects/" aria-current={current === 'projects' ? 'page' : undefined}>Projects</a>
-        <a href={github} target="_blank" rel="noopener" aria-label="GitHub (opens in a new tab)">GitHub ↗</a>
+        <a class="external" href={github} target="_blank" rel="noopener" aria-label="GitHub (opens in a new tab)">GitHub</a>
       </nav>
     </header>
     <main id="main"><slot /></main>
-    <footer class="site-footer"><span>© {new Date().getUTCFullYear()} Jonathan Pollack</span><a href={`mailto:${contactEmail}`}>Email me</a><a href={github} target="_blank" rel="noopener" aria-label="GitHub (opens in a new tab)">GitHub ↗</a></footer>
+    <footer class="site-footer"><span>© {new Date().getUTCFullYear()} Jonathan Pollack</span><a href={`mailto:${contactEmail}`}>Email me</a><a class="external" href={github} target="_blank" rel="noopener" aria-label="GitHub (opens in a new tab)">GitHub</a></footer>
   </body>
 </html>

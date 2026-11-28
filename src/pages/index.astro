@@ -26,7 +26,7 @@ const featuredEssay = posts.find(post => post.frontmatter.project === featured?.
         <h3 class="feature-title">{featured.title}</h3>
         <p>{featured.description}</p>
         <div class="actions">
-          {featured.demo && <a class="button" href={featured.demo} target="_blank" rel="noopener">Play {featured.title.toLowerCase()} ↗</a>}
+          {featured.demo && <a class="button external" href={featured.demo} target="_blank" rel="noopener">Play {featured.title.toLowerCase()}</a>}
           {featuredEssay && <a href={featuredEssay.url}>Read the essay behind it</a>}
         </div>
       </div>

@@ -51,8 +51,8 @@ const contents = sections.length >= minSectionsForContents ? sections : [];
           <h2 id="companion-heading">Play the experiment</h2>
           <p>{project.description}</p>
           <div class="actions">
-            {project.demo && <a class="button" href={project.demo} target="_blank" rel="noopener">Play {project.title.toLowerCase()} ↗</a>}
-            {project.source && <a href={project.source} target="_blank" rel="noopener">Source on GitHub ↗</a>}
+            {project.demo && <a class="button external" href={project.demo} target="_blank" rel="noopener">Play {project.title.toLowerCase()}</a>}
+            {project.source && <a class="external" href={project.source} target="_blank" rel="noopener">Source on GitHub</a>}
           </div>
         </aside>
       )}
